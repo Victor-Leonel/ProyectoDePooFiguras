@@ -14,16 +14,19 @@ namespace ProyectoDePOO_Figuras
         protected int X, Y, Z, W, A, F, L, K;
         protected Pen pluma;
         protected int ancho, largo;
-        protected Color color;
-        protected SolidBrush brocha;
-
+        public Color color;
+        protected SolidBrush brocha, brocha1;
 
         public Figuras(int x, int y)
         {
             X = x;
             Y = y;
-            brocha = new SolidBrush(Color.Blue);
-            pluma = new Pen(Color.Aqua, 2);
+            color = Color.Black;
+
+            //brocha = new SolidBrush(Color.RoyalBlue);
+            brocha = new SolidBrush(color);
+            brocha1 = new SolidBrush(Color.Red);
+            pluma = new Pen(Color.DarkBlue, 2);
             Random rnd = new Random();
             ancho = rnd.Next(10, 80);
             Z = rnd.Next(100, 500);
@@ -53,7 +56,7 @@ namespace ProyectoDePOO_Figuras
         {
             Graphics g = f.CreateGraphics();
             g.DrawRectangle(pluma, this.X, this.Y, ancho, largo);
-            g.FillRectangle(brocha, this.X, this.Y, ancho, largo);
+            g.FillRectangle(brocha1, this.X, this.Y, ancho, largo);
 
 
         }
@@ -67,6 +70,7 @@ namespace ProyectoDePOO_Figuras
         }
         public override void Dibuja(Form f)
         {
+            color = Color.Black;
             Graphics g = f.CreateGraphics();
             g.DrawEllipse(pluma, this.X, this.Y, ancho, largo);
             g.FillEllipse(brocha, this.X, this.Y, ancho, largo);
@@ -107,7 +111,30 @@ namespace ProyectoDePOO_Figuras
 
             //Rellenamos con un color el interior de la secuencia de lineas.
             // e.Graphics.FillPath(new SolidBrush(Color.Orange), ruta);
-            g.FillPath(new SolidBrush(Color.Yellow), ruta);
+            g.FillPath(new SolidBrush(Color.Aquamarine), ruta);
+        }
+
+
+    }
+    class Recta : Figuras
+    {
+        public Recta(int x, int y) : base(x, y)
+        {
+
+        }
+
+        public override void Dibuja(Form f)
+        {
+
+            Graphics g = f.CreateGraphics();
+
+            Point punto1 = new Point(this.Z, this.L);
+            Point punto2 = new Point(this.A, this.K);
+ 
+            GraphicsPath guia = new GraphicsPath();
+            guia.AddLine(punto1, punto2);
+
+            g.DrawPath(new Pen(Color.Silver, 4), guia);
         }
 
 

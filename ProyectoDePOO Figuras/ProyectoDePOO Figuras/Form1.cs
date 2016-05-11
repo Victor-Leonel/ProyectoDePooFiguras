@@ -15,7 +15,7 @@ namespace ProyectoDePOO_Figuras
     {
 
         List<Figuras> figuras;
-        enum TipoFigura { Rectangulo, Circulo, Triangulo };
+        enum TipoFigura { Rectangulo, Circulo, Triangulo, Recta};
         private Color relleno_actual, Contorno_actual;
         private TipoFigura figura_actual;
 
@@ -24,6 +24,7 @@ namespace ProyectoDePOO_Figuras
         {
             InitializeComponent();
 
+            relleno_actual = Color.Black;
             figura_actual = TipoFigura.Circulo;
             figuras = new List<Figuras>();
             circuloToolStripMenuItem.Checked = true;
@@ -48,6 +49,7 @@ namespace ProyectoDePOO_Figuras
             this.circuloToolStripMenuItem.Checked = true;
             this.rectanguloToolStripMenuItem.Checked = false;
             this.trianguloToolStripMenuItem.Checked = false;
+            this.rectaToolStripMenuItem.Checked = false;
             //figura_actual = TipoFigura.Circulo;
 
         }
@@ -57,6 +59,7 @@ namespace ProyectoDePOO_Figuras
             this.rectanguloToolStripMenuItem.Checked = true;
             this.circuloToolStripMenuItem.Checked = false;
             this.trianguloToolStripMenuItem.Checked = false;
+            this.rectaToolStripMenuItem.Checked = false;
             //figura_actual = TipoFigura.Rectangulo;
         }
 
@@ -65,11 +68,14 @@ namespace ProyectoDePOO_Figuras
             this.trianguloToolStripMenuItem.Checked = true;
             this.rectanguloToolStripMenuItem.Checked = false;
             this.circuloToolStripMenuItem.Checked = false;
+            this.rectaToolStripMenuItem.Checked = false;
             //figura_actual = TipoFigura.Triangulo;
         }
+        
 
         private void boton4_Click(object sender, EventArgs e)
         {
+            figuras.Clear();
 
         }
 
@@ -92,6 +98,30 @@ namespace ProyectoDePOO_Figuras
             // int z = NumericUpDown1;
         }
 
+        private void colorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+               // ColorDialog diag = new ColorDialog();
+                //diag.ShowDialog();
+               // Circulo.color = diag.Color;
+            if (circuloToolStripMenuItem.Checked == true)
+            {
+                ColorDialog diag = new ColorDialog();
+                diag.ShowDialog();
+                relleno_actual = diag.Color;
+            }
+
+        }
+
+        private void boton5_Click(object sender, EventArgs e)
+        {
+            this.rectaToolStripMenuItem.Checked = true;
+            this.trianguloToolStripMenuItem.Checked = false;
+            this.rectanguloToolStripMenuItem.Checked = false;
+            this.circuloToolStripMenuItem.Checked = false;
+            //figura_actual = TipoFigura.Triangulo;
+        }
+
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
             if (MouseButtons.Left == e.Button && circuloToolStripMenuItem.Checked == true)
@@ -108,12 +138,27 @@ namespace ProyectoDePOO_Figuras
 
             }
 
+            if (MouseButtons.Left == e.Button && rectaToolStripMenuItem.Checked == true)
+            {
+                Recta re = new Recta(e.X, e.Y);
+                re.Dibuja(this);
+                figuras.Add(re);
+
+            }
+
+            if (MouseButtons.Right == e.Button)
+            {
+
+                contextMenuStrip2.Show(this, e.X, e.Y);
+            }
+
             else if (MouseButtons.Left == e.Button && trianguloToolStripMenuItem.Checked == true)
             {
                 Triangulo t = new Triangulo(e.X, e.Y);
                 t.Dibuja(this);
                 figuras.Add(t);
             }
+
             
         }
            
