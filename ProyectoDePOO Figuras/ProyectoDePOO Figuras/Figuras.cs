@@ -14,19 +14,18 @@ namespace ProyectoDePOO_Figuras
         protected int X, Y, Z, W, A, F, L, K;
         protected Pen pluma;
         protected int ancho, largo;
-        public Color color;
-        protected SolidBrush brocha, brocha1;
+        public Color color, color1;
+        protected SolidBrush brocha;
 
-        public Figuras(int x, int y)
+        public Figuras(int x, int y, Color c, Color c1)
         {
             X = x;
             Y = y;
-            color = Color.Black;
+            color = c;
+            color1 = c1;
 
-            //brocha = new SolidBrush(Color.RoyalBlue);
             brocha = new SolidBrush(color);
-            brocha1 = new SolidBrush(Color.Red);
-            pluma = new Pen(Color.DarkBlue, 2);
+            pluma = new Pen(color1, 2);
             Random rnd = new Random();
             ancho = rnd.Next(10, 80);
             Z = rnd.Next(100, 500);
@@ -49,14 +48,14 @@ namespace ProyectoDePOO_Figuras
 
     class Rectangulo : Figuras
     {
-        public Rectangulo(int x, int y) : base(x, y)
+        public Rectangulo(int x, int y, Color c, Color c1) : base(x, y, c, c1)
         {
         }
         public override void Dibuja(Form f)
         {
             Graphics g = f.CreateGraphics();
             g.DrawRectangle(pluma, this.X, this.Y, ancho, largo);
-            g.FillRectangle(brocha1, this.X, this.Y, ancho, largo);
+            g.FillRectangle(brocha, this.X, this.Y, ancho, largo);
 
 
         }
@@ -64,7 +63,7 @@ namespace ProyectoDePOO_Figuras
 
     class Circulo : Figuras
     {
-        public Circulo(int x, int y): base(x, y)
+        public Circulo(int x, int y, Color c, Color c1) : base(x, y, c, c1)
         {
 
         }
@@ -80,7 +79,7 @@ namespace ProyectoDePOO_Figuras
 
     class Triangulo : Figuras
     {
-        public Triangulo(int x, int y): base(x, y)
+        public Triangulo(int x, int y, Color c, Color c1) : base(x, y, c, c1)
         {
 
         }
@@ -106,19 +105,17 @@ namespace ProyectoDePOO_Figuras
             ruta.AddLine(Vertice3, Vertice1);
 
             //Dibujamos la secuencia de lineas.
-            //e.Graphics.DrawPath(new Pen(Color.Black, 4), ruta);
-            g.DrawPath(new Pen(Color.Black, 4), ruta);
+            g.DrawPath(pluma, ruta);
 
             //Rellenamos con un color el interior de la secuencia de lineas.
-            // e.Graphics.FillPath(new SolidBrush(Color.Orange), ruta);
-            g.FillPath(new SolidBrush(Color.Aquamarine), ruta);
+            g.FillPath(brocha, ruta);
         }
 
 
     }
     class Recta : Figuras
     {
-        public Recta(int x, int y) : base(x, y)
+        public Recta(int x, int y, Color c, Color c1) : base(x, y, c, c1)
         {
 
         }
@@ -134,7 +131,7 @@ namespace ProyectoDePOO_Figuras
             GraphicsPath guia = new GraphicsPath();
             guia.AddLine(punto1, punto2);
 
-            g.DrawPath(new Pen(Color.Silver, 4), guia);
+            g.DrawPath(pluma, guia);
         }
 
 
